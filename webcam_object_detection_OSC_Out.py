@@ -16,7 +16,7 @@ cap = cv2.VideoCapture(0)
 model_path = "models/yolov7-tiny_384x640.onnx"
 yolov7_detector = YOLOv7(model_path, conf_thres=0.5, iou_thres=0.5)
 
-# cv2.namedWindow("Detected Objects", cv2.WINDOW_NORMAL)
+cv2.namedWindow("Detected Objects", cv2.WINDOW_NORMAL)
 while cap.isOpened():
 
     # Read frame from the video
@@ -28,13 +28,13 @@ while cap.isOpened():
     # Update object localizer   
     boxes, scores, class_ids = yolov7_detector(frame)
 
-    # # Uncomment to show window
-    # combined_img = yolov7_detector.draw_detections(frame)
-    # cv2.imshow("Detected Objects", combined_img)
+    # Uncomment to show window
+    combined_img = yolov7_detector.draw_detections(frame)
+    cv2.imshow("Detected Objects", combined_img)
 
-    # # Press key q to stop
-    # if cv2.waitKey(1) & 0xFF == ord('q'):
-    #     break
+    # Press key q to stop
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
     box_coord = []
     objects = []
