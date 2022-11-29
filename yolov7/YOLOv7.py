@@ -5,6 +5,10 @@ import onnxruntime
 
 from yolov7.utils import xywh2xyxy, nms, draw_detections
 
+from pythonosc import udp_client
+upd_ip = "127.0.0.1"
+udp_port = 7001
+
 
 class YOLOv7:
 
@@ -64,8 +68,11 @@ class YOLOv7:
     def inference(self, input_tensor):
         start = time.perf_counter()
         outputs = self.session.run(self.output_names, {self.input_names[0]: input_tensor})
+        itime=(time.perf_counter() - start)*1000
+        print(f"Inference time: {itime:.2f} ms")
 
-        print(f"Inference time: {(time.perf_counter() - start)*1000:.2f} ms")
+        client = udp_client.SimpleUDPClient(upd_ip, udp_port)
+        client.send_message("/time", str(itime))
         return outputs
 
     def process_output(self, output):

@@ -1,7 +1,7 @@
 import cv2
 from imread_from_url import imread_from_url
 
-from yolov7 import YOLOv7
+from YOLOv7 import YOLOv7
 
 # Initialize yolov7 object detector
 model_path = "models/yolov7_post_640x640.onnx"
